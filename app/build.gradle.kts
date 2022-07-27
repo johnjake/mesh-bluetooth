@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -44,6 +45,7 @@ android {
 
 dependencies {
 
+    implementation(project(mapOf("path" to ":utilities")))
     implementation("androidx.core:core-ktx:1.7.0")
 
     /** material design **/
