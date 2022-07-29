@@ -1,5 +1,6 @@
 package app.bluetooth.mesh.bases
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 ) : HiltFragmentEntry() {
 
     lateinit var binding: VB
+    lateinit var contexts: Context
 
     var customBackPressCallback: OnBackPressedCallback? = null
 
@@ -24,6 +26,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         savedInstanceState: Bundle?
     ): View? {
         binding = setUpViewBinding(inflater)
+        contexts = binding.root.context
         return binding.root
     }
 
