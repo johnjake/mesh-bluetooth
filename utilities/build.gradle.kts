@@ -38,6 +38,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("com.google.android.material:material:1.6.1")
 
+    /** hilt dagger **/
+    implementation("com.google.dagger:hilt-android:2.40.5")
+
     /** mesh network **/
     implementation("live.ditto:ditto:2.0.0-alpha1")
 

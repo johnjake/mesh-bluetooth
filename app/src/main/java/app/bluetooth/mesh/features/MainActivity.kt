@@ -14,13 +14,12 @@ import app.bluetooth.mesh.features.adapter.MeshAdapter
 import app.bluetooth.mesh.features.adapter.SwipeToDeleteCallback
 import app.bluetooth.mesh.features.dialog.NewTaskDialogFragment
 import app.bluetooth.utilities.extension.setDivider
+import app.bluetooth.utilities.utils.DittoBuilder
 import live.ditto.Ditto
 import live.ditto.DittoCollection
 import live.ditto.DittoDocument
-import live.ditto.DittoIdentity
 import live.ditto.DittoLiveQuery
 import live.ditto.DittoLiveQueryEvent
-import live.ditto.android.DefaultAndroidDittoDependencies
 import live.ditto.transports.DittoSyncPermissions
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate), NewTaskDialogFragment.NewTaskDialogListener {
@@ -42,17 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             rvMeshNetwork.setDivider(R.drawable.recycler_view_divider)
         }
-
-        val dependency = DefaultAndroidDittoDependencies(this)
-        val dittoInstance = Ditto(
-            dependency,
-            DittoIdentity.OnlinePlayground(
-                dependency,
-                "f2b5f038-6d00-433a-9176-6e84011da136",
-                "545717fe-6ffc-4e9f-ab47-7b500430a6ce",
-                enableDittoCloudSync = true
-            )
-        )
+        val dittoInstance = DittoBuilder.getInstance(this)
         ditto = dittoInstance
         dittoInstance.startSync()
         recycleSwift()
