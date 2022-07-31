@@ -5,11 +5,11 @@ import live.ditto.DittoDocument
 import java.util.UUID
 
 data class Products(
-    var _id: String = UUID.randomUUID().toString(),
+    var _id: String? = UUID.randomUUID().toString(),
     val category: String? = EMPTY,
     val name: String? = EMPTY,
     val imageUrl: String? = EMPTY,
-    val price: Float? = 0F,
+    val price: Double? = 0.0,
     val description: String? = EMPTY
 ) {
     constructor(document: DittoDocument) :
@@ -18,7 +18,7 @@ data class Products(
             document["category"].stringValue,
             document["name"].stringValue,
             document["imageUrl"].stringValue,
-            document["price"].floatValue,
+            document["price"].doubleValue,
             document["description"].stringValue
         )
 }

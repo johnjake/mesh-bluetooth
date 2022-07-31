@@ -26,7 +26,7 @@ fun <T : Any> castToMapConstructor(obj: T): Map<String, Any?> {
     return kClass.memberProperties.mapNotNull { prop ->
         prop.name.takeIf { name -> name in constructorPropName }?.let { cons ->
             cons to prop.get(obj)?.let { value ->
-                if(value::class.isData) {
+                if (value::class.isData) {
                     castToMap(obj)
                 } else value
             }
