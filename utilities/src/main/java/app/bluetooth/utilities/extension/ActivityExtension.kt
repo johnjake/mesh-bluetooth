@@ -1,4 +1,4 @@
-package app.bluetooth.utilities
+package app.bluetooth.utilities.extension
 
 import android.app.Activity
 import android.app.ProgressDialog
