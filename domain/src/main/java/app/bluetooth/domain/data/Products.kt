@@ -1,6 +1,6 @@
 package app.bluetooth.domain.data
 
-import app.bluetooth.utilities.extension.EMPTY
+import app.bluetooth.utilities.EMPTY
 import live.ditto.DittoDocument
 import java.util.UUID
 

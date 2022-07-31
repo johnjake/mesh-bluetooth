@@ -44,6 +44,12 @@ dependencies {
     /** mesh network **/
     implementation("live.ditto:ditto:2.0.0-alpha1")
 
+    /** room runtime for type converter **/
+    implementation("androidx.room:room-runtime:2.4.3")
+
+    /** gson **/
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     /** nav component **/
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
