@@ -1,3 +1,17 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="material_resources_20dp">20dp</dimen>
+    <dimen name="material_resources_12dp">12dp</dimen>
+    <dimen name="material_resources_35dp">35dp</dimen>
+    <dimen name="material_resources_16dp">16dp</dimen>
+    <dimen name="material_resources_22dp">22dp</dimen>
+    <dimen name="material_resources_11dp">11dp</dimen>
+    <dimen name="material_resources_25dp">25dp</dimen>
+    <dimen name="material_resources_10dp">10dp</dimen>
+    <dimen name="material_resources_15dp">15dp</dimen>
+    <dimen name="material_resources_8dp">8dp</dimen>
+    <dimen name="material_resources_16sp">16sp</dimen>
+    <dimen name="material_resources_5dp">5dp</dimen>
+    <dimen name="material_resources_30dp">30dp</dimen>
+    <dimen name="material_resources_1dp">1dp</dimen>
 </resources>

@@ -9,7 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewbinding.ViewBinding
 import app.bluetooth.mesh.hilt.HiltFragmentEntry
-import app.bluetooth.utilities.popupBackStack
+import app.bluetooth.utilities.extension.popupBackStack
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val setUpViewBinding: (LayoutInflater) -> VB
@@ -28,6 +28,15 @@ abstract class BaseFragment<VB : ViewBinding>(
         binding = setUpViewBinding(inflater)
         contexts = binding.root.context
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpObserver()
+        setUpView()
+        loadContent()
+        setupAdapter(binding.root)
+        addViewListeners()
     }
 
     fun baseActivity() = (requireActivity() as BaseActivity<*>)

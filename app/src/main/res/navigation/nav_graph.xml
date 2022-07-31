@@ -9,18 +9,15 @@
         android:id="@+id/FirstFragment"
         android:name="app.bluetooth.mesh.features.FirstFragment"
         tools:layout="@layout/fragment_first">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_dialog_add_product"
+            app:destination="@id/addProductDialogFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="app.bluetooth.mesh.features.SecondFragment"
-        tools:layout="@layout/fragment_second">
+    <dialog
+        android:id="@+id/addProductDialogFragment"
+        android:name="app.bluetooth.mesh.features.dialog.AddProductDialogFragment"
+        android:label="AddProductDialogFragment"
+        tools:layout="@layout/dialog_add_product"
+        />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
 </navigation>
