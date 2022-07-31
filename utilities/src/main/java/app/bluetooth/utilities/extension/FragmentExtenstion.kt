@@ -1,4 +1,4 @@
-package app.bluetooth.utilities
+package app.bluetooth.utilities.extension
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections

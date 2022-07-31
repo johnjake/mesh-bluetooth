@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/mesh-network/app/src/main/res/drawable/ic_close_product.xml" value="0.273" />
         <entry key="..\:/mesh-network/app/src/main/res/drawable/recycler_view_divider.xml" value="0.25" />
         <entry key="..\:/mesh-network/app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
         <entry key="..\:/mesh-network/app/src/main/res/layout/content_main.xml" value="0.35833333333333334" />
+        <entry key="..\:/mesh-network/app/src/main/res/layout/dialog_add_product.xml" value="0.35833333333333334" />
         <entry key="..\:/mesh-network/app/src/main/res/layout/dialog_new_task.xml" value="0.26796875" />
         <entry key="..\:/mesh-network/app/src/main/res/layout/fragment_first.xml" value="0.35833333333333334" />
         <entry key="..\:/mesh-network/app/src/main/res/layout/item_checker_view.xml" value="0.35833333333333334" />
