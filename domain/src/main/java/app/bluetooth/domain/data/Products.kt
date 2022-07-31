@@ -1,4 +1,4 @@
-package app.bluetooth.utilities.products
+package app.bluetooth.domain.data
 
 import app.bluetooth.utilities.extension.EMPTY
 import live.ditto.DittoDocument
@@ -19,6 +19,6 @@ data class Products(
             document["name"].stringValue,
             document["imageUrl"].stringValue,
             document["price"].floatValue,
-            document["description"].stringValue,
+            document["description"].stringValue
         )
 }
