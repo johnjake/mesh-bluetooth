@@ -13,7 +13,7 @@ class MeshAdapter(
     private val onItemClick: OnItemClickListener
 ) : ListAdapter<DittoDocument, MeshViewHolder>(diffCallBack) {
 
-    private var documents: MutableList<DittoDocument> = arrayListOf()
+    var documents: MutableList<DittoDocument> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeshViewHolder {
         val binding = ItemCheckerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)

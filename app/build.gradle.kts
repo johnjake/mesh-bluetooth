@@ -61,8 +61,10 @@ dependencies {
 
     /** hilt dagger **/
     implementation("com.google.dagger:hilt-android:2.40.5")
-
     kapt("com.google.dagger:hilt-compiler:2.41")
+
+    implementation("com.google.dagger:dagger:2.41")
+    kapt("com.google.dagger:dagger-compiler:2.41")
 
     /** view model **/
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01")

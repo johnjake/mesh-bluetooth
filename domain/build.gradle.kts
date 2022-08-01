@@ -1,6 +1,9 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,6 +44,10 @@ dependencies {
 
     /** hilt dagger **/
     implementation("com.google.dagger:hilt-android:2.40.5")
+    kapt("com.google.dagger:hilt-compiler:2.41")
+
+    implementation("com.google.dagger:dagger:2.41")
+    kapt("com.google.dagger:dagger-compiler:2.41")
 
     /** mesh network **/
     implementation("live.ditto:ditto:2.0.0-alpha1")

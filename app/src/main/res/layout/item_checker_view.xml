@@ -2,36 +2,155 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/material_resources_16dp">
 
-    <TextView
-        android:id="@+id/taskTextView"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Hot-dog"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/taskCheckBox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/white"
+        android:paddingBottom="@dimen/material_resources_15dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <CheckBox
-        android:id="@+id/taskCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#FFFFFF"
-        android:clickable="false"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_category_indicator"
+            android:layout_width="@dimen/material_resources_62dp"
+            android:layout_height="@dimen/material_resources_62dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/material_resources_12dp"
+            android:layout_marginBottom="@dimen/material_resources_5dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_circle_corner_stroke_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivShop"
+            android:layout_width="@dimen/material_resources_62dp"
+            android:layout_height="@dimen/material_resources_62dp"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/material_resources_4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_category_indicator"
+            app:layout_constraintEnd_toEndOf="@+id/image_category_indicator"
+            app:layout_constraintStart_toStartOf="@+id/image_category_indicator"
+            app:layout_constraintTop_toTopOf="@+id/image_category_indicator"
+            tools:background="@color/border" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_resources_8dp"
+            android:layout_marginEnd="@dimen/material_resources_17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_category_indicator"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/material_resources_text_size_17sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Robinsons Supermarket" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvShopDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/material_resources_3dp"
+                android:textColor="@color/text_description"
+                android:textSize="@dimen/material_resources_text_size_13sp"
+                app:layout_constraintStart_toStartOf="@+id/tvShop"
+                app:layout_constraintTop_toBottomOf="@+id/tvShop"
+                tools:text="Last ordered 4 days ago" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_discounts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_resources_3dp"
+                android:layout_marginEnd="@dimen/material_resources_15dp"
+                app:layout_constraintEnd_toStartOf="@+id/img_forward"
+                app:layout_constraintStart_toStartOf="@+id/tvShopDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvShopDesc">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFreeDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_store_tags"
+                    android:gravity="center"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/material_resources_text_size_12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/tvFreePrice"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Free Delivery"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFreePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_store_tags"
+                    android:gravity="center"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/material_resources_text_size_12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@+id/tvFreeDelivery"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="P50 free"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/flow1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tvFreeDelivery,tvFreePrice,tvFreePrice"
+                    app:flow_horizontalBias="0"
+                    app:flow_horizontalGap="@dimen/material_resources_4dp"
+                    app:flow_horizontalStyle="packed"
+                    app:flow_verticalBias="0"
+                    app:flow_verticalGap="@dimen/material_resources_3dp"
+                    app:flow_wrapMode="chain"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_forward"
+                android:layout_width="@dimen/material_resources_22dp"
+                android:layout_height="@dimen/material_resources_22dp"
+                android:layout_marginEnd="@dimen/material_resources_27dp"
+                android:src="@drawable/ic_forward_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvShop" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_resources_1dp"
+        android:layout_marginHorizontal="@dimen/material_resources_11dp"
+        android:background="@color/divider_lightest"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/taskTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_content" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
