@@ -4,6 +4,7 @@
     <disabledRules>
       <list>
         <option value="filename" />
+        <option value="final-newline" />
       </list>
     </disabledRules>
   </component>

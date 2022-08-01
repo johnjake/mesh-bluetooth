@@ -45,9 +45,10 @@ android {
 
 dependencies {
 
-    implementation(project(mapOf("path" to ":utilities")))
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation(project(":utilities"))
+    implementation(project(":domain"))
 
+    implementation("androidx.core:core-ktx:1.7.0")
     /** material design **/
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
@@ -61,6 +62,9 @@ dependencies {
     /** hilt dagger **/
     implementation("com.google.dagger:hilt-android:2.40.5")
     kapt("com.google.dagger:hilt-compiler:2.41")
+
+    implementation("com.google.dagger:dagger:2.41")
+    kapt("com.google.dagger:dagger-compiler:2.41")
 
     /** view model **/
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01")
@@ -86,6 +90,7 @@ dependencies {
     /** logging utilities **/
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    testImplementation(project(mapOf("path" to ":domain")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

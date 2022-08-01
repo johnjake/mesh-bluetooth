@@ -16,7 +16,7 @@ class FlowTest {
                     println("Emitting $i")
                     emit(i)
                 }
-            }.buffer(0)
+            }.buffer(1)
                 .collect {
                         value ->
                     delay(100)

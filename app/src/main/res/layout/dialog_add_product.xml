@@ -110,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/material_resources_16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_filter_apply"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save_apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar_filter">
@@ -124,7 +124,7 @@
                 android:layout_height="match_parent"
                 android:padding="20dp">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etId2"
+                    android:id="@+id/etCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="64dp"
@@ -136,7 +136,7 @@
                      />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etName2"
+                    android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
@@ -144,10 +144,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etId2" />
+                    app:layout_constraintTop_toBottomOf="@+id/etCategory" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etImageURL2"
+                    android:id="@+id/etImageURL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Image URL"
@@ -155,10 +155,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etName2" />
+                    app:layout_constraintTop_toBottomOf="@+id/etName" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPrice2"
+                    android:id="@+id/etPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Price"
@@ -167,10 +167,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etImageURL2" />
+                    app:layout_constraintTop_toBottomOf="@+id/etImageURL" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDescription2"
+                    android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"
@@ -179,7 +179,7 @@
                     android:layout_marginTop="@dimen/material_resources_20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etPrice2" />
+                    app:layout_constraintTop_toBottomOf="@+id/etPrice" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -187,7 +187,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_filter_apply"
+        android:id="@+id/btn_save_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/material_resources_12dp"
