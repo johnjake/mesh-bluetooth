@@ -7,8 +7,7 @@ import app.bluetooth.domain.SEND_BUNDLE_MSG
 import app.bluetooth.domain.data.Products
 import app.bluetooth.mesh.bases.BaseDialogFragment
 import app.bluetooth.mesh.databinding.DialogAddProductBinding
-import app.bluetooth.mesh.features.MainActivity
-import app.bluetooth.utilities.extension.castToMap
+import app.bluetooth.utilities.extension.castToJson
 import app.bluetooth.utilities.extension.toast
 import live.ditto.DittoDocumentID
 
@@ -37,19 +36,18 @@ class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(Dia
                     price = etPrice.text.toString().toDouble(),
                     description = etDescription.text.toString()
                 )
-                val mapProducts = castToMap(product)
-                (activity as MainActivity).dtManager.collectionManager.upsert(mapProducts)
-                sendBundle()
+                val json = product.castToJson()
+                sendBundle(product = json)
                 dismiss()
             }
         }
     }
 
-    private fun sendBundle() {
+    private fun sendBundle(product: String) {
         requireActivity().supportFragmentManager.setFragmentResult(
             REQUEST_KEYS,
             bundleOf(
-                SEND_BUNDLE_MSG to true
+                SEND_BUNDLE_MSG to product
             )
         )
     }
