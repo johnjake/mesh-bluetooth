@@ -8,45 +8,36 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import live.ditto.Ditto
 import live.ditto.DittoDocumentID
 import live.ditto.DittoLiveQueryEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dittoManager: DittoManager
+    private val builder: DittoManager
 ) : BaseViewModel() {
 
     private val dittoAddFlow: MutableSharedFlow<ProductState> = MutableSharedFlow(replay = 1)
     val productState: SharedFlow<ProductState> = dittoAddFlow
 
-    fun instance(): Ditto {
-        return dittoManager.instance()
-    }
-
-    fun startSync() {
-        dittoManager.startDitto()
-    }
-
-    fun storeDittoNode(ditto: Ditto) {
-        dittoManager.collectionManager = ditto?.store?.collection("products")
+    fun storeDittoNode() {
+        builder.collectionManager = builder.collectionDitto()
     }
 
     fun deleteNode(id: DittoDocumentID) {
-        dittoManager.ditto.store.collection("products").findByID(id).remove()
+        builder.removeDocument(id)
     }
 
     fun insert(products: Map<String, Any?>) {
-        dittoManager.collectionManager.upsert(products)
+        builder.upsert(products)
     }
 
-    fun refreshPermission(ditto: Ditto) {
-        ditto.refreshPermissions()
+    fun refreshPermission() {
+        builder.refreshedPermission()
     }
 
     fun observeDittoManager() {
-        dittoManager.collectionManager.findAll().observe { docs, event ->
+        builder.dittoFindAll().observe { docs, event ->
             when (event) {
                 is DittoLiveQueryEvent.Update -> {
                     viewModelScope.launch { dittoAddFlow.emit(ProductState.UpdateDocument(docs)) }

@@ -1,40 +1,36 @@
 package app.bluetooth.utilities.manager
 
-import android.content.Context
 import live.ditto.Ditto
 import live.ditto.DittoCollection
-import live.ditto.DittoIdentity
-import live.ditto.android.DefaultAndroidDittoDependencies
+import live.ditto.DittoDocumentID
+import live.ditto.DittoPendingCursorOperation
 import javax.inject.Inject
 
-class DittoManager @Inject constructor(private val context: Context) {
+class DittoManager @Inject constructor(builder: DittoInstance) {
     lateinit var collectionManager: DittoCollection
-    lateinit var ditto: Ditto
-    private lateinit var dittoManager: Ditto
-    private fun builder(
-        appId: String = "f2b5f038-6d00-433a-9176-6e84011da136",
-        token: String = "545717fe-6ffc-4e9f-ab47-7b500430a6ce"
-    ): Ditto {
-        val dependency = DefaultAndroidDittoDependencies(context)
-        val dittoInstance = Ditto(
-            dependency,
-            DittoIdentity.OnlinePlayground(
-                dependency,
-                appId,
-                token,
-                enableDittoCloudSync = true
-            )
-        )
-        ditto = dittoInstance
-        return dittoInstance
+    val dittoManager: Ditto = builder.instance()
+
+    init {
+        dittoManager.startSync()
     }
 
-    fun instance(): Ditto {
-        dittoManager = builder()
-        return dittoManager
+    fun collectionDitto(): DittoCollection {
+        return dittoManager.store.collection("products")
     }
 
-    fun startDitto() {
-        ditto.startSync()
+    fun removeDocument(id: DittoDocumentID) {
+        dittoManager.store.collection("products").findByID(id).remove()
+    }
+
+    fun upsert(item: Map<String, Any?>): DittoDocumentID {
+        return collectionManager.upsert(item)
+    }
+
+    fun refreshedPermission() {
+        dittoManager.refreshPermissions()
+    }
+
+    fun dittoFindAll(): DittoPendingCursorOperation {
+        return collectionManager.findAll()
     }
 }

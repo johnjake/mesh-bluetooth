@@ -10,18 +10,10 @@ import live.ditto.DittoUpdateResult
 import javax.inject.Inject
 
 class ProductRepository @Inject constructor(
-    private val dittoManager: DittoManager
+    private val builder: DittoManager
 ) : ProductAction {
     override suspend fun addProduct(product: Products): DittoDocumentID {
         val mapProduct = castToMap(product)
-        return dittoManager.collectionManager.upsert(mapProduct)
-    }
-
-    override suspend fun updateProduct(product: Products): Flow<List<DittoUpdateResult>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getCollection(): DittoCollection {
-        return dittoManager.ditto.store.collection("products")
+        return builder.upsert(mapProduct)
     }
 }
