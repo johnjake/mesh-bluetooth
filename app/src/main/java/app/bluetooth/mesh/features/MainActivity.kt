@@ -28,14 +28,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             navControl.navigate(R.id.action_dialog_add_product)
         }
         checkBluetooth()
-        setBluetoothEnable()
+        checkLocationPermission()
     }
 
     private fun setBluetoothEnable() {
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         if (!bluetoothManager.adapter.isEnabled) {
-            checkLocationPermission()
-            bluetoothManager.adapter.enable()
+            // bluetoothManager.adapter.enable()
         }
     }
 

@@ -28,7 +28,7 @@ class DialogViewModel @Inject constructor(
         ) {
             dittoAddFlow.emit(ProductState.ShowLoader)
             val dittoId = repository.addProduct(product)
-            dittoAddFlow.emit(ProductState.OnSuccess(dittoId))
+            dittoAddFlow.emit(ProductState.OnInsertSuccess(dittoId.value.toString()))
         }
     }
 }

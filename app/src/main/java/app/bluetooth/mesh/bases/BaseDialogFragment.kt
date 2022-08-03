@@ -27,7 +27,7 @@ abstract class BaseDialogFragment<VB : ViewBinding>(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = context?.let { Dialog(it) }
+        val dialog = context?.let { Dialog(it, android.R.style.Theme_Material_Dialog) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window

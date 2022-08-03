@@ -11,7 +11,7 @@ import dagger.hilt.android.scopes.FragmentScoped
 
 @Module
 @InstallIn(FragmentComponent::class)
-class DittoModule {
+class ProductModule {
     @FragmentScoped
     @Provides
     fun provideDittoRepository(
