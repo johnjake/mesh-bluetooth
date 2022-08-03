@@ -2,26 +2,19 @@ package app.bluetooth.mesh.features.dialog
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import app.bluetooth.domain.REQUEST_KEYS
 import app.bluetooth.domain.SEND_BUNDLE_MSG
 import app.bluetooth.domain.data.Products
 import app.bluetooth.mesh.bases.BaseDialogFragment
 import app.bluetooth.mesh.databinding.DialogAddProductBinding
-import app.bluetooth.utilities.extension.castToJson
-import app.bluetooth.utilities.extension.toast
+import app.bluetooth.mesh.features.product.ProductState
+import kotlinx.coroutines.flow.collectLatest
 import live.ditto.DittoDocumentID
 
 class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(DialogAddProductBinding::inflate) {
 
     private val viewModel: DialogViewModel by viewModels()
-    private fun handleSuccess(data: DittoDocumentID) {
-        requireActivity().toast(data[0].toString())
-    }
-
-    private fun handleFailed(error: String) {
-        TODO("Not yet implemented")
-    }
-
     override fun setUpView() {
         super.setUpView()
         binding.apply {
@@ -36,18 +29,36 @@ class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(Dia
                     price = etPrice.text.toString().toDouble(),
                     description = etDescription.text.toString()
                 )
-                val json = product.castToJson()
-                sendBundle(product = json)
-                dismiss()
+                val lq = viewModel.insertProduct(product)
             }
         }
     }
 
-    private fun sendBundle(product: String) {
+    override fun setUpObserver() {
+        super.setUpObserver()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.productState.collectLatest { state ->
+                when (state) {
+                    is ProductState.OnSuccess -> handlesSuccess(state.data)
+                    is ProductState.OnFailed -> {}
+                    is ProductState.OnDittoList -> {}
+                    is ProductState.UpdateDocument -> {}
+                    is ProductState.ShowLoader -> { }
+                    is ProductState.HideLoader -> { }
+                }
+            }
+        }
+    }
+
+    private fun handlesSuccess(data: DittoDocumentID) {
+        dismiss()
+    }
+
+    private fun sendBundle(inserted: Boolean) {
         requireActivity().supportFragmentManager.setFragmentResult(
             REQUEST_KEYS,
             bundleOf(
-                SEND_BUNDLE_MSG to product
+                SEND_BUNDLE_MSG to inserted
             )
         )
     }

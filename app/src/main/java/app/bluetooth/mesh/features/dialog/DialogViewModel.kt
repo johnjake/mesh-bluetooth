@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,7 @@ class DialogViewModel @Inject constructor(
         ) {
             dittoAddFlow.emit(ProductState.ShowLoader)
             val dittoId = repository.addProduct(product)
+            Timber.e("###################### $dittoId")
             dittoAddFlow.emit(ProductState.OnSuccess(dittoId))
         }
     }

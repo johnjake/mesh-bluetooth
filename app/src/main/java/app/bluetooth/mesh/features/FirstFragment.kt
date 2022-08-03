@@ -1,37 +1,28 @@
 package app.bluetooth.mesh.features
 
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import app.bluetooth.domain.REQUEST_KEYS
-import app.bluetooth.domain.SEND_BUNDLE_MSG
-import app.bluetooth.domain.data.Products
 import app.bluetooth.mesh.bases.BaseFragment
 import app.bluetooth.mesh.databinding.FragmentFirstBinding
 import app.bluetooth.mesh.features.adapter.MeshAdapter
 import app.bluetooth.mesh.features.adapter.SwipeToDeleteCallback
-import app.bluetooth.utilities.extension.castToClass
-import app.bluetooth.utilities.extension.castToMap
-import app.bluetooth.utilities.manager.DittoManager
+import app.bluetooth.mesh.features.product.ProductState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import live.ditto.Ditto
 import live.ditto.DittoDocument
-import live.ditto.DittoLiveQueryEvent
 import live.ditto.transports.DittoSyncPermissions
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::inflate) {
 
     private val productAdapter: MeshAdapter by lazy { MeshAdapter { document -> onClickItem(document) } }
+    private val viewModel: MainViewModel by viewModels()
 
-    @Inject
-    lateinit var dtManager: DittoManager
     var ditto: Ditto? = null
-
-    override fun setUpObserver() {
-        super.setUpObserver()
-    }
 
     override fun setUpView() {
         super.setUpView()
@@ -42,7 +33,8 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
             val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val item = productAdapter.documents[viewHolder.adapterPosition]
-                    dtManager.ditto.store.collection("products").findByID(item.id).remove()
+                    viewModel.deleteNode(item.id)
+                    dittoObservable()
                 }
             }
 
@@ -51,59 +43,57 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
         }
     }
 
+    override fun setUpObserver() {
+        super.setUpObserver()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.productState.collectLatest { state ->
+                when (state) {
+                    is ProductState.OnDittoList -> bindToList(state.data)
+                    is ProductState.UpdateDocument -> bindUpdatedList(state.data)
+                }
+            }
+        }
+    }
+
+    private fun bindUpdatedList(data: List<DittoDocument>) {
+        Timber.e("###################### $data")
+        productAdapter.updateData(data)
+    }
+
+    private fun bindToList(data: List<DittoDocument>) {
+        Timber.e("#################### $data")
+        productAdapter.setData(data.toMutableList())
+    }
+
     override fun onStart() {
         super.onStart()
         checkPermissions()
         runDitto()
         syncData()
+        observerDittoManager()
         dittoObservable()
     }
 
     private fun runDitto() {
-        ditto = dtManager.instance(requireContext())
+        ditto = viewModel.instance()
     }
 
     private fun observerDittoManager() {
-        dtManager.collectionManager = ditto?.store?.collection("products")!!
+        ditto?.let { viewModel.storeDittoNode(it) }
     }
 
     private fun syncData() {
-        dtManager.startDitto()
+        viewModel.startSync()
     }
 
     override fun onResume() {
         super.onResume()
         /** adding products listener **/
-        requireActivity().supportFragmentManager
-            .setFragmentResultListener(
-                REQUEST_KEYS,
-                viewLifecycleOwner
-            ) { _, bundle ->
-                val json = bundle.getString(SEND_BUNDLE_MSG).orEmpty()
-                val product = json.castToClass<Products>()
-                if (product != null) {
-                    val map = castToMap(product)
-                    dtManager.collectionManager.upsert(map)
-                }
-            }
+        dittoObservable()
     }
 
     private fun dittoObservable() {
-        observerDittoManager()
-        dtManager.collectionManager.findAll().observe { docs, event ->
-            when (event) {
-                is DittoLiveQueryEvent.Update -> {
-                    requireActivity().runOnUiThread {
-                        productAdapter.updateData(docs)
-                    }
-                }
-                is DittoLiveQueryEvent.Initial -> {
-                    requireActivity().runOnUiThread {
-                        productAdapter.setData(docs.toMutableList())
-                    }
-                }
-            }
-        }
+        viewModel.observeDittoManager()
     }
 
     private fun onClickItem(document: DittoDocument) {
@@ -125,6 +115,6 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Regardless of the outcome, tell Ditto that permissions maybe changed
-        ditto?.refreshPermissions()
+        ditto?.let { viewModel.refreshPermission(it) }
     }
 }
