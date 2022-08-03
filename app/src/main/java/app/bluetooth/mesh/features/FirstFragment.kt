@@ -4,6 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import app.bluetooth.domain.REQUEST_KEYS
+import app.bluetooth.domain.SEND_BUNDLE_MSG
 import app.bluetooth.mesh.bases.BaseFragment
 import app.bluetooth.mesh.databinding.FragmentFirstBinding
 import app.bluetooth.mesh.features.adapter.MeshAdapter
@@ -56,12 +58,12 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
     }
 
     private fun bindUpdatedList(data: List<DittoDocument>) {
-        Timber.e("###################### $data")
+        Timber.e("Update -> $data")
         productAdapter.updateData(data)
     }
 
     private fun bindToList(data: List<DittoDocument>) {
-        Timber.e("#################### $data")
+        Timber.e("Initial -> $data")
         productAdapter.setData(data.toMutableList())
     }
 
@@ -88,8 +90,14 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
 
     override fun onResume() {
         super.onResume()
-        /** adding products listener **/
-        dittoObservable()
+        requireActivity().supportFragmentManager
+            .setFragmentResultListener(REQUEST_KEYS, viewLifecycleOwner) { _, bundle ->
+                val documentId = bundle.getString(SEND_BUNDLE_MSG).orEmpty()
+                if (documentId.isNotEmpty()) {
+                    Timber.e("***  Insert data $documentId ***")
+                    dittoObservable()
+                }
+            }
     }
 
     private fun dittoObservable() {

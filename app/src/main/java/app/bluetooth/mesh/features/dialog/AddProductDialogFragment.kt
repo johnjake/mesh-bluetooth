@@ -10,7 +10,6 @@ import app.bluetooth.mesh.bases.BaseDialogFragment
 import app.bluetooth.mesh.databinding.DialogAddProductBinding
 import app.bluetooth.mesh.features.product.ProductState
 import kotlinx.coroutines.flow.collectLatest
-import live.ditto.DittoDocumentID
 
 class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(DialogAddProductBinding::inflate) {
 
@@ -29,7 +28,7 @@ class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(Dia
                     price = etPrice.text.toString().toDouble(),
                     description = etDescription.text.toString()
                 )
-                val lq = viewModel.insertProduct(product)
+                viewModel.insertProduct(product)
             }
         }
     }
@@ -39,7 +38,7 @@ class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(Dia
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.productState.collectLatest { state ->
                 when (state) {
-                    is ProductState.OnSuccess -> handlesSuccess(state.data)
+                    is ProductState.OnInsertSuccess -> handlesSuccess(state.documentId)
                     is ProductState.OnFailed -> {}
                     is ProductState.OnDittoList -> {}
                     is ProductState.UpdateDocument -> {}
@@ -50,15 +49,18 @@ class AddProductDialogFragment : BaseDialogFragment<DialogAddProductBinding>(Dia
         }
     }
 
-    private fun handlesSuccess(data: DittoDocumentID) {
-        dismiss()
+    private fun handlesSuccess(data: String) {
+        if (data.isNotEmpty()) {
+            sendBundle(data)
+            dismiss()
+        }
     }
 
-    private fun sendBundle(inserted: Boolean) {
+    private fun sendBundle(documentId: String) {
         requireActivity().supportFragmentManager.setFragmentResult(
             REQUEST_KEYS,
             bundleOf(
-                SEND_BUNDLE_MSG to inserted
+                SEND_BUNDLE_MSG to documentId
             )
         )
     }
