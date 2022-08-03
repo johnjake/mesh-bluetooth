@@ -13,7 +13,6 @@ import app.bluetooth.mesh.features.adapter.SwipeToDeleteCallback
 import app.bluetooth.mesh.features.product.ProductState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import live.ditto.Ditto
 import live.ditto.DittoDocument
 import live.ditto.transports.DittoSyncPermissions
 import timber.log.Timber
@@ -23,8 +22,6 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
 
     private val productAdapter: MeshAdapter by lazy { MeshAdapter { document -> onClickItem(document) } }
     private val viewModel: MainViewModel by viewModels()
-
-    var ditto: Ditto? = null
 
     override fun setUpView() {
         super.setUpView()
@@ -70,22 +67,12 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
     override fun onStart() {
         super.onStart()
         checkPermissions()
-        runDitto()
-        syncData()
         observerDittoManager()
         dittoObservable()
     }
 
-    private fun runDitto() {
-        ditto = viewModel.instance()
-    }
-
     private fun observerDittoManager() {
-        ditto?.let { viewModel.storeDittoNode(it) }
-    }
-
-    private fun syncData() {
-        viewModel.startSync()
+        viewModel.storeDittoNode()
     }
 
     override fun onResume() {
@@ -123,6 +110,6 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Regardless of the outcome, tell Ditto that permissions maybe changed
-        ditto?.let { viewModel.refreshPermission(it) }
+        viewModel.refreshPermission()
     }
 }

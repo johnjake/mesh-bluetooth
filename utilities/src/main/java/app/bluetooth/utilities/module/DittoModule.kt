@@ -1,6 +1,7 @@
 package app.bluetooth.utilities.module
 
 import android.content.Context
+import app.bluetooth.utilities.manager.DittoInstance
 import app.bluetooth.utilities.manager.DittoManager
 import dagger.Module
 import dagger.Provides
@@ -11,8 +12,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DittoModule {
+object DittoModule {
     @Singleton
     @Provides
-    fun provideDittoManager(@ApplicationContext context: Context) = DittoManager(context)
+    fun provideDittoManager(builder: DittoInstance) = DittoManager(builder)
+
+    @Singleton
+    @Provides
+    fun provideDittoInstance(@ApplicationContext context: Context) = DittoInstance(context)
 }
