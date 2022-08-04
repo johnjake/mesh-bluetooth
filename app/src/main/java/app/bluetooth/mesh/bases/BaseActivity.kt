@@ -2,6 +2,7 @@ package app.bluetooth.mesh.bases
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.WindowManager
 import androidx.viewbinding.ViewBinding
 import app.bluetooth.mesh.hilt.HiltActivityEntry
 
@@ -14,6 +15,7 @@ abstract class BaseActivity<T : ViewBinding>(
         super.onCreate(savedInstanceState)
         binding = setUpViewBinding(layoutInflater)
         setContentView(binding.root)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setUpObserver()
         setUpView()
     }
