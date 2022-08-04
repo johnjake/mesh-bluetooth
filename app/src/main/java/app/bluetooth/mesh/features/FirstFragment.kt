@@ -47,8 +47,8 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.productState.collectLatest { state ->
                 when (state) {
-                    is ProductState.OnDittoList -> bindToList(state.data)
-                    is ProductState.UpdateDocument -> bindUpdatedList(state.data)
+                    is ProductState.OnDittoList -> {}
+                    is ProductState.UpdateDocument -> {}
                 }
             }
         }
@@ -88,7 +88,15 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(FragmentFirstBinding::i
     }
 
     private fun dittoObservable() {
-        viewModel.observeDittoManager()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.observeDittoManager().collectLatest { emitted ->
+                Timber.e("########################## $emitted")
+                when (emitted.isInitial) {
+                    true -> productAdapter.setData(emitted.documents?.toMutableList() ?: arrayListOf())
+                    false -> productAdapter.updateData(emitted.documents ?: emptyList())
+                }
+            }
+        }
     }
 
     private fun onClickItem(document: DittoDocument) {
