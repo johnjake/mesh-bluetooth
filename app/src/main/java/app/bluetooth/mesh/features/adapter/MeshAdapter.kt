@@ -8,7 +8,6 @@ import app.bluetooth.mesh.databinding.ItemCheckerViewBinding
 import app.bluetooth.utilities.extension.OnItemClickListener
 import app.bluetooth.utilities.utils.DittoDocumentUtils
 import live.ditto.DittoDocument
-import live.ditto.DittoLiveQueryMove
 
 class MeshAdapter(
     private val onItemClick: OnItemClickListener
@@ -39,35 +38,6 @@ class MeshAdapter(
         documents.clear()
         documents.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    override fun getItemCount() = this.documents.size
-
-    fun inserts(indexes: List<Int>): Int {
-        for (index in indexes) {
-            this.notifyItemRangeInserted(index, 1)
-        }
-        return this.documents.size
-    }
-
-    fun deletes(indexes: List<Int>): Int {
-        for (index in indexes) {
-            this.notifyItemRangeRemoved(index, 1)
-        }
-        return this.documents.size
-    }
-
-    fun updates(indexes: List<Int>): Int {
-        for (index in indexes) {
-            this.notifyItemRangeChanged(index, 1)
-        }
-        return this.documents.size
-    }
-
-    fun moves(moves: List<DittoLiveQueryMove>) {
-        for (move in moves) {
-            this.notifyItemMoved(move.from, move.to)
-        }
     }
 
     companion object {

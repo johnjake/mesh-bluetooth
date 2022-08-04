@@ -39,37 +39,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun checkLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    requestPermissions(
-                        arrayOf(
-                            BLUETOOTH_SCAN,
-                            BLUETOOTH_CONNECT,
-                            BLUETOOTH_ADVERTISE,
-                            BLUETOOTH_ADMIN
-                        ),
-                        REQUEST_CODE_PERMISSIONS
-                    )
-                } else {
-                    requestPermissions(
-                        arrayOf(
-                            ACCESS_FINE_LOCATION,
-                            ACCESS_COARSE_LOCATION,
-                            BLUETOOTH_ADMIN
-                        ),
-                        REQUEST_CODE_PERMISSIONS
-                    )
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                when {
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+                        when {
+                            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> requestPermissions(
+                                arrayOf(
+                                    BLUETOOTH_SCAN,
+                                    BLUETOOTH_CONNECT,
+                                    BLUETOOTH_ADVERTISE,
+                                    BLUETOOTH_ADMIN
+                                ),
+                                REQUEST_CODE_PERMISSIONS
+                            )
+                            else -> requestPermissions(
+                                arrayOf(
+                                    ACCESS_FINE_LOCATION,
+                                    ACCESS_COARSE_LOCATION,
+                                    BLUETOOTH_ADMIN
+                                ),
+                                REQUEST_CODE_PERMISSIONS
+                            )
+                        }
+                    }
+                    else ->
+                        requestPermissions(
+                            arrayOf(
+                                ACCESS_FINE_LOCATION,
+                                ACCESS_COARSE_LOCATION,
+                                BLUETOOTH_ADMIN
+                            ),
+                            REQUEST_CODE_PERMISSIONS
+                        )
                 }
-            } else {
-                requestPermissions(
-                    arrayOf(
-                        ACCESS_FINE_LOCATION,
-                        ACCESS_COARSE_LOCATION,
-                        BLUETOOTH_ADMIN
-                    ),
-                    REQUEST_CODE_PERMISSIONS
-                )
             }
         }
     }
