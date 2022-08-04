@@ -1,3 +1,7 @@
+import ProductFlavor.APP_DIMENSION
+import ProductFlavor.RED_VELVET_CAKE
+import ProductFlavor.SNOW_CONE
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -18,6 +22,16 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions.addAll(listOf(APP_DIMENSION))
+    productFlavors {
+        create(RED_VELVET_CAKE) {
+            dimension = APP_DIMENSION
+        }
+        create(SNOW_CONE) {
+            dimension = APP_DIMENSION
+        }
     }
 
     buildTypes {
@@ -50,14 +64,14 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.7.0")
     /** material design **/
-    implementation("androidx.activity:activity-ktx:1.5.0")
+    implementation("androidx.activity:activity-ktx:1.5.1")
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     /** nav component **/
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
 
     /** hilt dagger **/
     implementation("com.google.dagger:hilt-android:2.40.5")
