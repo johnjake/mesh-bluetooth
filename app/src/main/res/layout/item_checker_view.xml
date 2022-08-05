@@ -57,7 +57,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Robinsons Supermarket" />
+                tools:text="Coca Cola Diet" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvShopDesc"
@@ -68,7 +68,7 @@
                 android:textSize="@dimen/material_resources_text_size_13sp"
                 app:layout_constraintStart_toStartOf="@+id/tvShop"
                 app:layout_constraintTop_toBottomOf="@+id/tvShop"
-                tools:text="Last ordered 4 days ago" />
+                tools:text="beverage" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_discounts"
